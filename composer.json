@@ -1,0 +1,27 @@
+{
+    "name": "cooperaj/laravel-redis-sentinel",
+    "description": "Provides a Queue driver that allows Laravel to work with Redis Sentinels better.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adam Cooper",
+            "email": "adam@networkpie.co.uk"
+        }
+    ],
+    "require": {
+        "php": "^5.5.0",
+        "illuminate/contracts": "^5.2.0",
+        "illuminate/support": "^5.2.0",
+        "illuminate/queue": "^5.2.0",
+        "predis/predis": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RedisSentinel\\": "src/RedisSentinel/"
+        }
+    }
+}
