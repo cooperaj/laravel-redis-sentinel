@@ -4,7 +4,7 @@ namespace RedisSentinel\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 
-class RedisSentinel extends ServiceProvider
+class RedisSentinelServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
