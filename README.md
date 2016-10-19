@@ -1,7 +1,7 @@
 Laravel Redis Sentinel
 ============
 
-This provides a Sentinel aware driver for Laravel. A Redis cluster with Sentinels supports a high availability Master/Slave architecture that provides automatic failover should a node stop working. 
+This provides a Sentinel aware driver for Laravel. A Redis cluster with Sentinels supports a high availability Master/Slave architecture that provides automatic failover should a node stop working.
 
 It's simple code and merely allows you to configure Sentinels correctly by changing some assumptions Laravel makes about how you're using Redis.
 
@@ -13,7 +13,7 @@ Add the Service provider to your `config/app.php`, you should also comment out (
     // Illuminate\Redis\RedisServiceProvider::class,
 
     ...
-    
+
     RedisSentinel\Laravel\RedisSentinelServiceProvider::class,
 ]
 ```
@@ -47,7 +47,7 @@ Point your Redis database at a set of Redis Sentinels. Change the `redis` part o
             ]
         ]
     ],
-    
+
     // optional configuration for a separate Redis 'database' for just a cache
     'cache' => [
         [
@@ -78,6 +78,26 @@ Point your Redis database at a set of Redis Sentinels. Change the `redis` part o
 ],
 ```
 
+Optionally you can add a configuration option that causes Predis to interrogate a given Sentinel for a complete list of Sentinels. If you do this then you only need to provide a single Sentinel in the configuration. Predis will ensure that the Sentinel list is kept up to date on subsequent queries.
+
+```
+'default' => [
+    [
+        'host' => env('REDIS_SENTINEL'),
+        'port' => 26379
+    ],
+    'options' => [
+        'replication' => 'sentinel',
+        'service' => 'mymaster',
+        'update_sentinels' => true,
+        'parameters' => [
+            'database' => 0,
+            'password' => env('REDIS_PASSWORD', null)
+        ]
+    ]
+],
+```
+
 ###Queue
 
 Add a connection to your `config/queue.php` file:
@@ -86,7 +106,7 @@ Add a connection to your `config/queue.php` file:
 'connections' => [
 
     ...
-    
+
     'sentinel' => [
         'driver' => 'sentinel-redis',
         'connection' => 'default', // or any other named 'database' you define in database.php
