@@ -23,6 +23,10 @@ class Database extends LaravelRedisDatabase
             $options = array_merge($options, Arr::pull($server, 'options'));
 
             $clients[$key] = new Client($server, $options);
+
+            if (isset($options['update_sentinels']) && boolval($options['update_sentinels']) === true) {
+                ($clients[$key])->getConnection()->setUpdateSentinels(true);
+            }
         }
 
         return $clients;
