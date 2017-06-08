@@ -29,14 +29,14 @@ class RedisSentinelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('redis', function ($app) {
+        $this->app->singleton('redis', function($app) {
             return new Database($app['config']['database.redis']);
         });
     }
 
     protected function registerRedisSentinelConnector(QueueManager $manager)
     {
-        $manager->addConnector('sentinel-redis', function () {
+        $manager->addConnector('sentinel-redis', function() {
             return new SentinelConnector($this->app['redis']);
         });
     }
