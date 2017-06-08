@@ -3,6 +3,7 @@
 namespace RedisSentinel\Laravel;
 
 use Illuminate\Queue\RedisQueue;
+use Predis\Client;
 
 class SentinelQueue extends RedisQueue
 {
@@ -16,6 +17,13 @@ class SentinelQueue extends RedisQueue
      */
     protected function getConnection()
     {
-        return $this->redis->connection($this->connection)->getClientFor('master');
+        $connection = $this->redis->connection($this->connection);
+
+        if ($connection instanceof Client) {
+            // getClientFor is not in the client interface. 
+            return $connection->getClientFor('master');
+        }
+
+        return $connection;
     }
 }
