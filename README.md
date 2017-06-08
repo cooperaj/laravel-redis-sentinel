@@ -8,14 +8,14 @@ This provides a Sentinel aware driver for Laravel. A Redis cluster with Sentinel
 
 It's simple code and merely allows you to configure Sentinels correctly by changing some assumptions Laravel makes about how you're using Redis.
 
-###Compatibility
+### Compatibility
 
 Version | Supported Laravel Version
 ------- | -------------------------
 ^0.0 | ^5.2
 ^1.0 | ^5.3
 
-###Installation
+### Installation
 
 Add the Service provider to your `config/app.php`, you should also comment out (or remove) the default `illuminate` Redis driver:
 
@@ -110,7 +110,7 @@ Optionally you can add a configuration option that causes Predis to interrogate 
 ],
 ```
 
-###Queue
+### Queue
 
 Add a connection to your `config/queue.php` file:
 
