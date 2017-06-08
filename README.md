@@ -1,9 +1,21 @@
 Laravel Redis Sentinel
 ============
 
+[![Build Status](https://scrutinizer-ci.com/g/cooperaj/laravel-redis-sentinel/badges/build.png?b=master)](https://scrutinizer-ci.com/g/cooperaj/laravel-redis-sentinel/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cooperaj/laravel-redis-sentinel/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cooperaj/laravel-redis-sentinel/?branch=master)
+
 This provides a Sentinel aware driver for Laravel. A Redis cluster with Sentinels supports a high availability Master/Slave architecture that provides automatic failover should a node stop working.
 
 It's simple code and merely allows you to configure Sentinels correctly by changing some assumptions Laravel makes about how you're using Redis.
+
+###Compatibility
+
+Version | Supported Laravel Version
+------- | -------------------------
+^0.0 | ^5.2
+^1.0 | ^5.3
+
+###Installation
 
 Add the Service provider to your `config/app.php`, you should also comment out (or remove) the default `illuminate` Redis driver:
 

@@ -16,10 +16,10 @@ class SentinelConnector extends RedisConnector
     public function connect(array $config)
     {
         $queue = new SentinelQueue(
-            $this->redis, $config['queue'], Arr::get($config, 'connection', $this->connection)
+            $this->redis, $config['queue'],
+            Arr::get($config, 'connection', $this->connection),
+            Arr::get($config, 'retry_after', 60)
         );
-
-        $queue->setExpire(Arr::get($config, 'expire', 60));
 
         return $queue;
     }
