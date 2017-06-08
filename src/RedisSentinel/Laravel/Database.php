@@ -5,6 +5,8 @@ namespace RedisSentinel\Laravel;
 use Illuminate\Support\Arr;
 use Predis\Client;
 use Illuminate\Redis\Database as LaravelRedisDatabase;
+use Predis\Connection\Aggregate\SentinelReplication;
+use Predis\Connection\ConnectionInterface;
 
 class Database extends LaravelRedisDatabase
 {
@@ -25,7 +27,13 @@ class Database extends LaravelRedisDatabase
             $clients[$key] = new Client($server, $options);
 
             if (isset($options['update_sentinels']) && boolval($options['update_sentinels']) === true) {
-                ($clients[$key])->getConnection()->setUpdateSentinels(true);
+                /** @var ConnectionInterface $connection */
+                $connection = ($clients[$key])->getConnection();
+
+                if ($connection instanceof SentinelReplication) {
+                    // is not defined on the interface so make sure we've got the right thing.
+                    $connection->setUpdateSentinels(true);
+                }
             }
         }
 
