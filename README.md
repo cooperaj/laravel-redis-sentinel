@@ -123,7 +123,7 @@ Add a connection to your `config/queue.php` file:
         'driver' => 'sentinel-redis',
         'connection' => 'default', // or any other named 'database' you define in database.php
         'queue' => 'default',
-        'expire' => 90,
+        'retry_after' => 90,
     ],
 ],
 ```
