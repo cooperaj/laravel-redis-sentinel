@@ -26,17 +26,27 @@ class Database extends LaravelRedisDatabase
 
             $clients[$key] = new Client($server, $options);
 
-            if (isset($options['update_sentinels']) && boolval($options['update_sentinels']) === true) {
-                /** @var ConnectionInterface $connection */
-                $connection = ($clients[$key])->getConnection();
-
-                if ($connection instanceof SentinelReplication) {
-                    // is not defined on the interface so make sure we've got the right thing.
-                    $connection->setUpdateSentinels(true);
-                }
-            }
+            $this->setUpdateSentinels(($clients[$key])->getConnection(), $options);
         }
 
         return $clients;
+    }
+
+
+    /**
+     * Sets the update sentinels flag on the connection if configured and possible.
+     *
+     * @param $connection ConnectionInterface
+     * @param $options array
+     */
+    private function setUpdateSentinels($connection, $options)
+    {
+        if (isset($options['update_sentinels'])
+                && boolval($options['update_sentinels']) === true
+                && $connection instanceof SentinelReplication) {
+
+            // is not defined on the ConnectionInterface so make sure we've got the right thing.
+            $connection->setUpdateSentinels(true);
+        }
     }
 }
