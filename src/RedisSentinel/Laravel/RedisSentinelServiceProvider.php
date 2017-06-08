@@ -8,13 +8,6 @@ use Illuminate\Support\ServiceProvider;
 class RedisSentinelServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
-    /**
      * Add the connector to the queue drivers
      */
     public function boot()

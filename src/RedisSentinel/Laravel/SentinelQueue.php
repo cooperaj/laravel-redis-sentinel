@@ -20,7 +20,7 @@ class SentinelQueue extends RedisQueue
         $connection = $this->redis->connection($this->connection);
 
         if ($connection instanceof Client) {
-            // getClientFor is not in the client interface. 
+            // getClientFor is not in the client interface.
             return $connection->getClientFor('master');
         }
 
