@@ -3,6 +3,7 @@
 namespace RedisSentinel\Laravel;
 
 use Illuminate\Queue\RedisQueue;
+use Illuminate\Redis\Connections\PredisConnection;
 use Predis\Client;
 
 class SentinelQueue extends RedisQueue
@@ -13,15 +14,18 @@ class SentinelQueue extends RedisQueue
      * Since we're using sentinels and Predis does not support transactions over aggregate queries then
      * make sure return only the 'master' client.
      *
-     * @return \Predis\ClientInterface
+     * @return \Illuminate\Redis\Connections\Connection
      */
     protected function getConnection()
     {
         $connection = $this->redis->connection($this->connection);
 
-        if ($connection instanceof Client) {
+        /** @var \Predis\ClientInterface $client */
+        $client = $connection->client();
+
+        if ($client instanceof Client) {
             // getClientFor is not in the client interface.
-            return $connection->getClientFor('master');
+            return new PredisConnection($client->getClientFor('master'));
         }
 
         return $connection;
